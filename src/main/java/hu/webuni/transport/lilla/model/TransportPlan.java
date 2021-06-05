@@ -14,7 +14,7 @@ public class TransportPlan {
 	private long id;
 	private int standardProfit;
 
-	@OneToMany(mappedBy = "TransportPlan")
+	@OneToMany(mappedBy = "transportPlan")
 	private List<Section> section;
 
 	public TransportPlan(long id, int standardProfit) {

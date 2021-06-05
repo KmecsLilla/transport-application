@@ -1,25 +1,25 @@
-package hu.webuni.transport.lilla.model;
+package hu.webuni.transport.lilla.dto;
 
-import javax.persistence.Entity;
-import javax.persistence.GeneratedValue;
-import javax.persistence.Id;
+import javax.validation.constraints.NotEmpty;
 
-@Entity
-public class Address {
+public class AddressDto {
 
-	@Id
-	@GeneratedValue
 	private long id;
+	@NotEmpty
 	private String isoCode;
+	@NotEmpty
 	private String postalCode;
+	@NotEmpty
 	private String city;
+	@NotEmpty
 	private String street;
+	@NotEmpty
 	private int streetNumber;
+	@NotEmpty
 	private double longitude;
 	private double latitude;
 
-
-	public Address(long id, String isoCode, String postalCode, String city, String street, int streetNumber,
+	public AddressDto(long id, String isoCode, String postalCode, String city, String street, int streetNumber,
 			double longitude, double latitude) {
 		super();
 		this.id = id;
@@ -32,7 +32,7 @@ public class Address {
 		this.latitude = latitude;
 	}
 
-	public Address() {
+	public AddressDto() {
 	}
 
 	public long getId() {
@@ -74,7 +74,6 @@ public class Address {
 	public void setStreet(String street) {
 		this.street = street;
 	}
-
 	public int getStreetNumber() {
 		return streetNumber;
 	}
