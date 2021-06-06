@@ -1,6 +1,7 @@
 package hu.webuni.transport.lilla.dto;
 
 import javax.validation.constraints.NotEmpty;
+import javax.validation.constraints.NotNull;
 
 public class AddressDto {
 
@@ -8,14 +9,16 @@ public class AddressDto {
 	@NotEmpty
 	private String isoCode;
 	@NotEmpty
+	@NotNull
 	private String postalCode;
 	@NotEmpty
+	@NotNull
 	private String city;
 	@NotEmpty
+	@NotNull
 	private String street;
-	@NotEmpty
+	@NotNull
 	private int streetNumber;
-	@NotEmpty
 	private double longitude;
 	private double latitude;
 

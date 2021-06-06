@@ -1,11 +1,16 @@
 package hu.webuni.transport.lilla.web;
 
+import java.util.NoSuchElementException;
+
 import javax.validation.Valid;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.HttpStatus;
+import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.server.ResponseStatusException;
 
 import hu.webuni.transport.lilla.dto.AddressDto;
 import hu.webuni.transport.lilla.mapper.AddressMapper;
@@ -22,9 +27,18 @@ public class AddressController {
 	@Autowired
 	AddressMapper addressMapper;
 
+	@PostMapping
 	public AddressDto createAddress(@RequestBody @Valid AddressDto addressDto) {
-		Address address = addressMapper.dtoToAddress(addressDto);
-		return addressMapper.addressToDto(addressService.save(address));
+		try {
+			if(addressDto.getId() > 0) {
+				throw new ResponseStatusException(HttpStatus.BAD_REQUEST);
+			}
+			Address address = addressMapper.dtoToAddress(addressDto);
+				return addressMapper.addressToDto(addressService.save(address));
+			} catch (NoSuchElementException e) {
+				throw new ResponseStatusException(HttpStatus.BAD_REQUEST);
+			}
+
 	}
 
 }
