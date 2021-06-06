@@ -1,6 +1,7 @@
 package hu.webuni.transport.lilla.service;
 
 import java.util.List;
+import java.util.Optional;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -22,5 +23,9 @@ public class AddressService {
 
 	public List<Address> findAll() {
 		return addressRepository.findAll();
+	}
+
+	public Optional<Address> findAddressById(long id) {
+		return addressRepository.findById(id);
 	}
 }
