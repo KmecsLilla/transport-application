@@ -28,4 +28,9 @@ public class AddressService {
 	public Optional<Address> findAddressById(long id) {
 		return addressRepository.findById(id);
 	}
+
+	@Transactional
+	public void delete(long id) {
+		addressRepository.deleteById(id);
+	}
 }

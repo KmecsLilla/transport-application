@@ -7,6 +7,7 @@ import javax.validation.Valid;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
+import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
@@ -55,5 +56,10 @@ public class AddressController {
 		AddressDto addressDto = addressMapper.addressToDto(addressService.findAddressById(id)
 				.orElseThrow(() -> new ResponseStatusException(HttpStatus.NOT_FOUND)));
 			return addressDto;
+	}
+
+	@DeleteMapping("/{id}")
+	public void deleteAddress(@PathVariable long id) {
+		addressService.delete(id);
 	}
 }
