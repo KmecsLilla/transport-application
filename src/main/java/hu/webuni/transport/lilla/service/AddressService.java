@@ -33,4 +33,8 @@ public class AddressService {
 	public void delete(long id) {
 		addressRepository.deleteById(id);
 	}
+	@Transactional
+	public Address update(Address address) {
+		return addressRepository.save(address);
+	}
 }
