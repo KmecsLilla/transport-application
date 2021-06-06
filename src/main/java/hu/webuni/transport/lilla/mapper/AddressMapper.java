@@ -1,5 +1,7 @@
 package hu.webuni.transport.lilla.mapper;
 
+import java.util.List;
+
 import javax.validation.Valid;
 
 import org.mapstruct.Mapper;
@@ -13,5 +15,7 @@ public interface AddressMapper {
 	Address dtoToAddress(@Valid AddressDto addressDto);
 
 	AddressDto addressToDto(Address address);
+
+	List<AddressDto> adressesToDtos(List<Address> addresses);
 
 }

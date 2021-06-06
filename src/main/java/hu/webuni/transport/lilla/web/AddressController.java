@@ -1,11 +1,13 @@
 package hu.webuni.transport.lilla.web;
 
+import java.util.List;
 import java.util.NoSuchElementException;
 
 import javax.validation.Valid;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
+import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -38,7 +40,14 @@ public class AddressController {
 			} catch (NoSuchElementException e) {
 				throw new ResponseStatusException(HttpStatus.BAD_REQUEST);
 			}
-
 	}
+
+	@GetMapping
+	public List<AddressDto> getAllAddresses() {
+		List<Address> addresses = null;
+		addresses = addressService.findAll();
+		return addressMapper.adressesToDtos(addresses);
+	}
+
 
 }
