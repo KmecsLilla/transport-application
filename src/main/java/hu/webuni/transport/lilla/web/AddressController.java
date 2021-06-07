@@ -19,6 +19,7 @@ import org.springframework.web.bind.annotation.RestController;
 import org.springframework.web.server.ResponseStatusException;
 
 import hu.webuni.transport.lilla.dto.AddressDto;
+import hu.webuni.transport.lilla.dto.AddressFilterDto;
 import hu.webuni.transport.lilla.mapper.AddressMapper;
 import hu.webuni.transport.lilla.model.Address;
 import hu.webuni.transport.lilla.service.AddressService;
@@ -82,5 +83,15 @@ public class AddressController {
 		} else {
 			return ResponseEntity.notFound().build();
 		}
+	}
+
+	@PostMapping("/search")
+	public List<AddressDto> findByExample(@RequestBody AddressFilterDto example) {
+		Address address = addressMapper.dtoToAddress(example);
+		List<Address> foundAddressesByExample = addressService.findAddressByExample(address);
+		List<AddressDto> foundAddressesDtos = addressMapper.adressesToDtos(foundAddressesByExample);
+		return foundAddressesDtos;
+//		return employeeMapper.allEmployeeToEmployeeDtos(hrEmployeeService.findEmployeesByExample(employeeMapper.dtoToEmployee(example)));
+
 	}
 }
