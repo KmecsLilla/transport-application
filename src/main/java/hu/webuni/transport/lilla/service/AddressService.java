@@ -6,9 +6,11 @@ import java.util.Optional;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Sort;
 import org.springframework.data.jpa.domain.Specification;
+import org.springframework.http.HttpStatus;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 import org.springframework.util.StringUtils;
+import org.springframework.web.server.ResponseStatusException;
 
 import hu.webuni.transport.lilla.model.Address;
 import hu.webuni.transport.lilla.repository.AddressRepository;
@@ -66,6 +68,12 @@ public class AddressService {
 			spec = spec.and(AddressSpecification.hasStreet(street));
 		}
 
-		return addressRepository.findAll(spec, Sort.by("id"));
+		List<Address> foundHits = addressRepository.findAll(spec, Sort.by("id"));
+		if (foundHits.isEmpty()) {
+			throw new ResponseStatusException(HttpStatus.BAD_REQUEST);
+		}
+		return foundHits;
+
+//		return addressRepository.findAll(spec, Sort.by("id"));
 	}
 }
