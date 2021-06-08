@@ -6,6 +6,11 @@ import java.util.NoSuchElementException;
 import javax.validation.Valid;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.Pageable;
+import org.springframework.data.domain.Sort;
+import org.springframework.data.web.PageableDefault;
+import org.springframework.http.HttpHeaders;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.DeleteMapping;
@@ -85,13 +90,31 @@ public class AddressController {
 		}
 	}
 
-	@PostMapping("/search")
-	public List<AddressDto> findByExample(@RequestBody AddressFilterDto example) {
-		Address address = addressMapper.dtoToAddress(example);
-		List<Address> foundAddressesByExample = addressService.findAddressByExample(address);
-		List<AddressDto> foundAddressesDtos = addressMapper.adressesToDtos(foundAddressesByExample);
-		return foundAddressesDtos;
-//		return employeeMapper.allEmployeeToEmployeeDtos(hrEmployeeService.findEmployeesByExample(employeeMapper.dtoToEmployee(example)));
+//	@PostMapping("/search") - first simple version
+//	public List<AddressDto> findByExample(@RequestBody AddressFilterDto example) {
+//		Address address = addressMapper.dtoToAddress(example);
+//		List<Address> foundAddressesByExample = addressService.findAddressByExample(address);
+//		List<AddressDto> foundAddressesDtos = addressMapper.adressesToDtos(foundAddressesByExample);
+//		return foundAddressesDtos;
+////		return employeeMapper.allEmployeeToEmployeeDtos(hrEmployeeService.findEmployeesByExample(employeeMapper.dtoToEmployee(example)));
+//
+//	}
 
+	@PostMapping(value = "/search")
+	public ResponseEntity<List<AddressDto>> findByExample(@RequestBody AddressFilterDto example,
+			@PageableDefault(page = 0, size = Integer.MAX_VALUE, sort = "id", direction = Sort.Direction.ASC) Pageable pageable) {
+
+//	    	@SortDefault({
+//	    		@SortDefault(sort = "{name}", direction = Sort.Direction.DESC),
+//	    		@SortDefault(sort = "", direction = Sort.Direction.ASC) })
+
+		Page<Address> page = addressService.findAddressByExample(example, pageable);
+
+	    HttpHeaders responseHeaders = new HttpHeaders();
+	 	responseHeaders.set("X-Total-Count", Long.toString(page.getTotalElements()));
+
+	 	return ResponseEntity.ok()
+	 		.headers(responseHeaders)
+	 		.body(addressMapper.addressesToDtos(page.getContent()));
 	}
 }
