@@ -46,10 +46,10 @@ public class AddressController {
 				throw new ResponseStatusException(HttpStatus.BAD_REQUEST);
 			}
 			Address address = addressMapper.dtoToAddress(addressDto);
-				return addressMapper.addressToDto(addressService.save(address));
-			} catch (NoSuchElementException e) {
-				throw new ResponseStatusException(HttpStatus.BAD_REQUEST);
-			}
+			return addressMapper.addressToDto(addressService.save(address));
+		} catch (NoSuchElementException e) {
+			throw new ResponseStatusException(HttpStatus.BAD_REQUEST);
+		}
 	}
 
 	@GetMapping
