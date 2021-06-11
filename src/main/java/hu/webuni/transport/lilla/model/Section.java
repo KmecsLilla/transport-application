@@ -12,22 +12,23 @@ public class Section {
 	@GeneratedValue
 	private long id;
 
-	@OneToOne(mappedBy = "section")
+	@OneToOne
 	private Milestone fromMilestone;
 
-	@OneToOne(mappedBy = "section")
+	@OneToOne
 	private Milestone toMilestone;
+
 	private int ordinaryNumber;
 
 	@ManyToOne
 	private TransportPlan transportPlan;
 
-	public Section(long id, Milestone fromMilestone, Milestone toMilestone, int ordinaryNumber) {
+	public Section(Milestone fromMilestone, Milestone toMilestone, int ordinaryNumber, TransportPlan transportPlan) {
 		super();
-		this.id = id;
 		this.fromMilestone = fromMilestone;
 		this.toMilestone = toMilestone;
 		this.ordinaryNumber = ordinaryNumber;
+		this.transportPlan = transportPlan;
 	}
 
 	public Section() {

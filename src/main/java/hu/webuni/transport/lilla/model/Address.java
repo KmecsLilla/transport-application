@@ -10,6 +10,7 @@ public class Address {
 	@Id
 	@GeneratedValue
 	private long id;
+
 	private String isoCode;
 	private String postalCode;
 	private String city;
@@ -19,10 +20,9 @@ public class Address {
 	private double latitude;
 
 
-	public Address(long id, String isoCode, String postalCode, String city, String street, int streetNumber,
+	public Address(String isoCode, String postalCode, String city, String street, int streetNumber,
 			double longitude, double latitude) {
 		super();
-		this.id = id;
 		this.isoCode = isoCode;
 		this.postalCode = postalCode;
 		this.city = city;

@@ -11,14 +11,14 @@ import hu.webuni.transport.lilla.dto.DelayDto;
 import hu.webuni.transport.lilla.service.DelayService;
 
 @RestController
-@RequestMapping("/api/tranportPlans")
+@RequestMapping("/api/transportplans")
 public class TransportPlanController {
 	@Autowired
 	DelayService delayService;
 
 	@PostMapping("/{id}/delay")
-	public void registerDelay(@PathVariable int id, @RequestBody DelayDto delay) {
-		delayService.registerDelay(id, delay.getMilestoneId(), delay.getDelay());
+	public int registerDelay(@PathVariable long id, @RequestBody DelayDto delayDto) {
+		return delayService.registerDelay(id, delayDto.getMilestoneId(), delayDto.getDelay());
 	}
 
 }

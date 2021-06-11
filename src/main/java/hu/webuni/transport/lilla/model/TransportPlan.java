@@ -1,5 +1,6 @@
 package hu.webuni.transport.lilla.model;
 
+import java.util.ArrayList;
 import java.util.List;
 
 import javax.persistence.Entity;
@@ -15,11 +16,10 @@ public class TransportPlan {
 	private int standardProfit;
 
 	@OneToMany(mappedBy = "transportPlan")
-	private List<Section> section;
+	private List<Section> sections = new ArrayList<>();
 
-	public TransportPlan(long id, int standardProfit) {
+	public TransportPlan(int standardProfit) {
 		super();
-		this.id = id;
 		this.standardProfit = standardProfit;
 	}
 
@@ -42,14 +42,17 @@ public class TransportPlan {
 		this.standardProfit = standardProfit;
 	}
 
-	public List<Section> getSection() {
-		return section;
+	public List<Section> getSections() {
+		return sections;
 	}
 
-	public void setSection(List<Section> section) {
-		this.section = section;
+	public void setSections(List<Section> sections) {
+		this.sections = sections;
 	}
 
 
+	public void addSection(Section section) {
+		this.sections.add(section);
+	}
 
 }
