@@ -11,6 +11,7 @@ import org.springframework.http.HttpStatus;
 import org.springframework.stereotype.Service;
 import org.springframework.web.server.ResponseStatusException;
 
+import hu.webuni.transport.lilla.config.TransportConfig;
 import hu.webuni.transport.lilla.model.Milestone;
 import hu.webuni.transport.lilla.model.Section;
 import hu.webuni.transport.lilla.model.TransportPlan;
@@ -25,6 +26,9 @@ public class DelayService {
 
 	@Autowired
 	MilestoneRepository milestoneRepository;
+
+	@Autowired
+	TransportConfig transportConfig;
 
 	@Transactional
 	public int registerDelay(long id, long milestoneId, int delay) {
@@ -70,9 +74,9 @@ public class DelayService {
 //		int promptProfit =
 //		System.out.println("register delay");
 
-		int delayCost30 = 5;
-		int delayCost60 = 10;
-		int delayCost120 = 15;
+		int delayCost30 = transportConfig.getDelayCost30();
+		int delayCost60 = transportConfig.getDelayCost60();
+		int delayCost120 = transportConfig.getDelayCost120();
 
 		int newProfit = transportPlan.getStandardProfit();
 		if (delay >= 120) {
